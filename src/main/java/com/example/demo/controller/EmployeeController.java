@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +16,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.DemoApplication;
 import com.example.demo.Service.EmployeeService;
 import com.example.demo.entity.Employee;
 
 @RestController
 public class EmployeeController {
 
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(DemoApplication.class);
+	
 	@Autowired
 	EmployeeService es;
 
@@ -31,7 +37,7 @@ public class EmployeeController {
 
 	@GetMapping(path = "/employees", produces = "application/json")
 	public List<Employee> getEmployees() {
-
+		LOGGER.info("Inside get all employees");
 		return es.findAll();
 	}
 
