@@ -41,7 +41,7 @@ public class EmployeeController {
 		return es.findAll();
 	}
 
-	@PostMapping(path = "/create", produces = "application/json", consumes = "application/json")
+	@PostMapping(path = "/createEmployee", produces = "application/json", consumes = "application/json")
 	public Employee createEmployee(@RequestBody Employee emp) {
 		return es.createEmployee(emp);
 	}
