@@ -49,4 +49,9 @@ public class EmployeeService {
 
 	}
 
+	public List<Employee> findEmployeeByAge(int age) {
+		
+		return er.findByAge(age);
+	}
+
 }

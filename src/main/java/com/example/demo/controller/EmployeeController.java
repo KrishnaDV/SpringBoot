@@ -35,6 +35,13 @@ public class EmployeeController {
 		return es.findEmployee(id);
 	}
 
+	@GetMapping(path = "/employee/age/{age}", produces = "application/json")
+	public List<Employee> getEmployeeByAge(@PathVariable int age) {
+
+		return es.findEmployeeByAge(age);
+	}
+	
+	
 	@GetMapping(path = "/employees", produces = "application/json")
 	public List<Employee> getEmployees() {
 		LOGGER.info("Inside get all employees");

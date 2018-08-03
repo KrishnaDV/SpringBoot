@@ -6,7 +6,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "project")
+@NamedQuery(name="Project.findByName",query="select p.employees from Project p where p.name = :name")
 public class Project {
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

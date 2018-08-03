@@ -2,14 +2,38 @@ package com.example.demo.entity;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
+
 
 @Entity
 @Table(name = "employee")
+@NamedQuery(name = "Employee.findByAge", query = "select e.phones from Employee e where e.age = :age")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "emp_id", nullable = false, updatable = false)
 	private int id;
 
@@ -22,16 +46,16 @@ public class Employee {
 	@Embedded
 	private Address address;
 
+	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "desg_id")
+	@JoinColumn(name="desg_id")
 	private Designation designation;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "Emp_Phones", joinColumns = { @JoinColumn(name = "emp_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "phn_id") })
 	private Set<Phones> phones;
-	
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "Emp_Projects", joinColumns = { @JoinColumn(name = "emp_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "proj_id") })
@@ -69,12 +93,13 @@ public class Employee {
 		this.address = address;
 	}
 
-	public Employee(int id, String name, int age, Address address) {
+	public Employee(int id, String name, int age, Address address, Designation designation) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.address = address;
+		this.designation = designation;
 	}
 
 	public Employee() {
