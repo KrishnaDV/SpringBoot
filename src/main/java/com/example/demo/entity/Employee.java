@@ -56,7 +56,7 @@ public class Employee {
 			@JoinColumn(name = "phn_id") })
 	private Set<Phones> phones;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "Emp_Projects", joinColumns = { @JoinColumn(name = "emp_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "proj_id") })
 	private Set<Project> projects;
